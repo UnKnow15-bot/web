@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %} 
+ 
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{ message }}</strong>  
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+    <h4 class="heading p-5 m-5">Welcome {{ user.name | lower }}, Manage your Tasks </h4>
+    <!--h1 class="text-primary"> Image : </h1>
+    <img src="{% static 'images/blogpost.jpg' %}"-->
+
+<div class="container">
+  <table class="table mx-5">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Created At</th>
+
+        <th scope="col">Actions</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+
+
+ 
+    {% for task in tasks %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td> {{ task.title }} </td>
+        <td>{{ task.description | slice:":19"}}</td>
+        <td>{{ task.created_at | date:"M y,'ha'" }}</td>
+        <td>
+          <a href ="{% url 'update_task' task.id %}" class=" btn btn-success" >Update </a>
+
+          <a href ="{% url 'delete_task' task.id %}" class="btn btn-danger" >Delete </a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+
+  
+
+</div>
+{% endblock %}

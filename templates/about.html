@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h4> This is about Page Heading </h4>
+ 
+
+
+<div class="container">
+   {% include 'content.html' %}
+
+
+   {% for blog in blogs %}
+   <br>
+   <a href="{% url 'blog_details' blog.slug %}">
+      {{ blog.title }}
+   </a>
+   {% endfor %}
+</div>
+
+
+
+
+{% endblock %}

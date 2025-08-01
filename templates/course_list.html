@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    {% if query %}
+    <h2>Search Result</h2>
+    {% else %}
+    <h2>All Courses</h2>
+    {% endif %}
+    <p class="page-item">
+        Showing {{page_obj.number }} out of {{ page_obj.paginator.num_pages }} pages
+    </p>
+
+    <div class="row">
+        {% for course in page_obj %}
+        <div class="card me-5 mb-5" style="width: 13rem;">
+            <img src="{{ course.image.url }}" style="height:180px" class="card-img-top" alt="course image">
+            <div class="card-body">
+                <h5 class="card-title">{{ course.name }}</h5>
+                <p class="card-text">Price : {{ course.price }}</p>
+                <p class="card-text">Category :{{ course.category.name }}</p>
+                <a href="{{ course.file.url }}" class="btn btn-primary">Download file</a>
+                <a href="{% url 'add_to_cart' course.id %}">Add to Cart</a>
+                <form action="{% url 'create_checkout_session' course.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-hover-dark">Enroll Now</button>
+                </form>
+
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number}}">Previous</a></li>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+
+            {% if i == page_obj.number %}
+            <li class="page-item active"><a class="page-link">{{i}}</a></li>
+            {% else %}
+            <li class="page-item "><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            {% endif %}
+
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number}}">Next</a></li>
+            {% endif %}
+
+        </ul>
+    </nav>
+
+
+
+</div>
+
+
+{% endblock %}

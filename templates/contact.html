@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container">
+  
+    <h5> Contact Form </h5>
+    <form method="post" action="{% url 'contact' %}">
+        {% csrf_token %}
+
+        {% for contact in contact_form %}
+            <div class="form-group">
+                {{contact.label_tag}}
+
+                <div class="input-group ">
+                {{ contact }}
+                </div>
+
+                {% if contact.errors %}
+                <div class="text-danger">
+                    {{ contact.errors}}
+                </div>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+
+   
+
+        <button type="submit" class="btn btn-primary mt-4">Submit</button>
+    </form>
+
+</div>
+
+{% endblock %}

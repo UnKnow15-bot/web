@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h3 class="m-3"> Add Task Details</h3>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label mb-3">Title</label>
+            <input type="text" name="title" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control" rows="4"  placeholder="Enter description"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{% endblock %}
